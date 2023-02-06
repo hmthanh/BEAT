@@ -57,7 +57,8 @@ class Vocab:
                 keep_words.append(k)
 
         print('    word trimming, kept %s / %s = %.4f' % (
-            len(keep_words), len(self.word2index), len(keep_words) / len(self.word2index)
+            len(keep_words), len(self.word2index), len(
+                keep_words) / len(self.word2index)
         ))
 
         # reinitialize dictionary
@@ -76,7 +77,8 @@ class Vocab:
 
         # initialize embeddings to random values for special words
         init_sd = 1 / np.sqrt(embedding_dim)
-        weights = np.random.normal(0, scale=init_sd, size=[self.n_words, embedding_dim])
+        weights = np.random.normal(0, scale=init_sd, size=[
+                                   self.n_words, embedding_dim])
         weights = weights.astype(np.float32)
 
         # read word vectors
@@ -85,6 +87,7 @@ class Vocab:
             vec = word_model.get_word_vector(word)
             weights[id] = vec
         self.word_embedding_weights = weights
+
 
 def build_vocab(name, data_path, cache_path, word_vec_path=None, feat_dim=None):
     print('  building a language model...')
@@ -101,7 +104,8 @@ def build_vocab(name, data_path, cache_path, word_vec_path=None, feat_dim=None):
         if word_vec_path is None:
             lang_model.word_embedding_weights = None
         elif lang_model.word_embedding_weights.shape[0] != lang_model.n_words:
-            logging.warning('    failed to load word embedding weights. check this')
+            logging.warning(
+                '    failed to load word embedding weights. check this')
             assert False
 
     with open(cache_path, 'wb') as f:
@@ -109,23 +113,26 @@ def build_vocab(name, data_path, cache_path, word_vec_path=None, feat_dim=None):
 
     return lang_model
 
+
 def index_words(lang_model, data_path):
-    #index words form text
+    # index words form text
     with open(data_path, "r") as f:
         for line in f.readlines():
             line = line.replace(",", " ")
             line = line.replace(".", " ")
             line = line.replace("?", " ")
             line = line.replace("!", " ")
-            for word in line.split(): 
+            for word in line.split():
                 lang_model.index_word(word)
     print('    indexed %d words' % lang_model.n_words)
 
+
 def index_words_from_textgrid(lang_model, data_path):
-    import textgrid as tg 
-    trainvaltest=os.listdir(data_path)
+    import textgrid as tg
+    trainvaltest = os.listdir(data_path)
     for loadtype in trainvaltest:
-        if "." in loadtype: continue #ignore .ipynb_checkpoints
+        if "." in loadtype:
+            continue  # ignore .ipynb_checkpoints
         texts = os.listdir(data_path+loadtype+"/text/")
         for textfile in texts:
             tgrid = tg.TextGrid.fromFile(data_path+loadtype+"/text/"+textfile)
@@ -135,11 +142,12 @@ def index_words_from_textgrid(lang_model, data_path):
                 word_n = word_n.replace(".", " ")
                 word_n = word_n.replace("?", " ")
                 word_n = word_n.replace("!", " ")
-                #print(word_n)
+                # print(word_n)
                 lang_model.index_word(word_n)
-    print('    indexed %d words' % lang_model.n_words)    
-    
+    print('    indexed %d words' % lang_model.n_words)
+
+
 if __name__ == "__main__":
-    #11195 for all, 5793 for 4 speakers
-    build_vocab("beat_english_15_141", "/home/ma-user/work/datasets/beat_cache/beat_english_15_141/", "/home/ma-user/work/datasets/beat_cache/beat_english_15_141/vocab.pkl", "/home/ma-user/work/datasets/cc.en.300.bin", 300)
-    
+    # 11195 for all, 5793 for 4 speakers
+    build_vocab("beat_english_15_141", "/home/ma-user/work/datasets/beat_cache/beat_english_15_141/",
+                "/home/ma-user/work/datasets/beat_cache/beat_english_15_141/vocab.pkl", "/home/ma-user/work/datasets/cc.en.300.bin", 300)
