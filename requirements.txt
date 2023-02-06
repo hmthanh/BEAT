@@ -1,10 +1,10 @@
 imageio==2.9.0
 librosa==0.8.0
 lmdb==1.2.1
-loguru==0.5.3
+loguru==0.6.0
 nnAudio==0.2.2
 numba==0.53.1
-numpy==1.20.2
+numpy==1.24.2
 opencv-python==4.5.1.48
 pandas==1.2.4
 parso==0.7.0
