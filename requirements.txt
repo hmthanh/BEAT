@@ -37,3 +37,4 @@ wandb==0.12.16
 seaborn
 kornia
 h5py
+configargparse
