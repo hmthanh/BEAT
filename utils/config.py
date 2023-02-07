@@ -34,7 +34,7 @@ def parse_args():
     # ------------- path and save name ---------------- #
     parser.add("--is_train", default=True, type=str2bool)
     # different between environments
-    parser.add("--root_path", default="../..")
+    parser.add("--root_path", default="/kaggle/working")
     parser.add("--out_root_path", default="/outputs/audio2pose/", type=str)
     parser.add("--train_data_path", default="/datasets/trinity/train/", type=str)
     parser.add("--val_data_path", default="/datasets/trinity/val/", type=str)
